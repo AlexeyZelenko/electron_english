@@ -5,11 +5,7 @@ const fs = require('fs').promises;
 // Отключаем аппаратное ускорение
 app.disableHardwareAcceleration();
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
-
+// Создаем окно браузера
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -22,54 +18,40 @@ const createWindow = () => {
       sandbox: true,
     },
   });
-
-  if (typeof MAIN_WINDOW_VITE_DEV_SERVER_URL !== 'undefined') {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else if (typeof MAIN_WINDOW_VITE_NAME !== 'undefined') {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  } else {
-    console.error('Unable to load URL or file. Check environment variables.');
-  }
+  console.log("process.env.NODE_ENV", process.env.NODE_ENV)
 
   if (process.env.NODE_ENV === 'development') {
+    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
     mainWindow.webContents.openDevTools();
+  } else {
+    // Для продакшн-сборки загружаем файл из скомпилированной папки
+    const indexPath = path.join(__dirname, '../renderer/main_window/index.html');
+    fs.stat(indexPath)
+      .then(() => {
+        mainWindow.loadFile(indexPath);
+      })
+      .catch((err) => {
+        console.error('Failed to find index.html:', err);
+      });
   }
 
+  // Обработка ошибок при загрузке контента
   mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
     console.error('Failed to load content:', errorDescription);
   });
 
-  mainWindow.loadURL(`file://${path.join(__dirname, '../renderer/index.html')}`);
-
-  // Убедитесь, что Electron корректно отображает путь
+  // Логируем успешную загрузку окна
   mainWindow.webContents.on('did-finish-load', () => {
-    console.log('Electron window loaded');
+    console.log('Electron window loaded successfully');
+  });
+
+  // Обработка ошибок окна
+  mainWindow.webContents.on('crashed', () => {
+    console.error('The window has crashed');
   });
 };
 
-// Handle file export
-ipcMain.handle('export-file', async (event, { content, extension }) => {
-  try {
-    const options = {
-      title: 'Save File',
-      defaultPath: `~/words.${extension}`,
-      filters: [{ name: extension.toUpperCase(), extensions: [extension] }]
-    };
-
-    const { canceled, filePath } = await dialog.showSaveDialog(null, options);
-    if (!canceled && filePath) {
-      await fs.writeFile(filePath, content);
-      return true;
-    }
-    return false;
-  } catch (err) {
-    console.error('Error saving file:', err);
-    throw new Error('Failed to save file');
-  }
-});
-
-// The play-audio logic is moved to the renderer process
-// When Electron is initialized
+// Запуск Electron
 app.whenReady().then(() => {
   createWindow();
 
@@ -80,6 +62,7 @@ app.whenReady().then(() => {
   });
 });
 
+// Закрытие приложения для всех платформ, кроме macOS
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
