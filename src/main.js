@@ -38,6 +38,13 @@ const createWindow = () => {
   mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
     console.error('Failed to load content:', errorDescription);
   });
+
+  mainWindow.loadURL(`file://${path.join(__dirname, '../renderer/index.html')}`);
+
+  // Убедитесь, что Electron корректно отображает путь
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log('Electron window loaded');
+  });
 };
 
 // Handle file export
