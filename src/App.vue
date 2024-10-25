@@ -8,7 +8,7 @@
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
                             <router-link to="/" class="text-xl font-bold text-blue-600">
-                                English Learning
+                                My Dictionary
                             </router-link>
                         </div>
 
