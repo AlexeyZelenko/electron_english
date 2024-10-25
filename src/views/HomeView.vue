@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-gray-100 p-8">
         <div class="max-w-4xl mx-auto">
             <div class="flex justify-between items-center mb-12">
-                <h1 class="text-3xl font-bold">English Learning App</h1>
+                <h1 class="text-3xl font-bold">Words Learning App</h1>
                 <button
                         @click="showAddWordModal = true"
                         class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition"
