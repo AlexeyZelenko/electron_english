@@ -8,7 +8,7 @@ export default defineConfig({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['electron'], // указание, что electron импортируется извне
+      external: ['electron'],
     },
   },
 });
