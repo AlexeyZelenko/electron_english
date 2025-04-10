@@ -67,7 +67,8 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {useAuthStore} from '../stores/authStore';
+// import {useAuthStore} from '../stores/authStore';
+import {useAuthStore} from '../stores/authStoreFirebase';
 
 const router = useRouter();
 const authStore = useAuthStore();

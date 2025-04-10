@@ -93,7 +93,8 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import {useWordStore} from '../stores/wordStore';
+import {useWordStore} from '../stores/wordStoreFirebase';
+// import {useWordStore} from '../stores/wordStore';
 
 const wordStore = useWordStore();
 const currentIndex = ref(0);

@@ -90,7 +90,8 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useWordStore} from '../stores/wordStore';
+// import {useWordStore} from '../stores/wordStore';
+import {useWordStore} from '../stores/wordStoreFirebase';
 import type {Word} from '../types';
 
 const emit = defineEmits(['close', 'word-added']);

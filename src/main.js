@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('node:path');
 const fs = require('fs').promises;
+require('dotenv').config();
 
 // Отключаем аппаратное ускорение
 app.disableHardwareAcceleration();

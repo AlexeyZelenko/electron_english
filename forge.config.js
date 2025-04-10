@@ -73,6 +73,11 @@ module.exports = {
             config: 'vite.renderer.config.mjs',
           },
         ],
+        dev: {
+          server: {
+            port: 3000, // Or whatever port your Vite dev server uses
+          },
+        },
       },
     },
     new FusesPlugin({

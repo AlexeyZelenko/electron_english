@@ -81,7 +81,8 @@
 <script setup lang="ts">
 import {onMounted} from 'vue';
 import {useRouter} from 'vue-router';
-import {useAuthStore} from './stores/authStore';
+// import {useAuthStore} from './stores/authStore';
+import {useAuthStore} from './stores/authStoreFirebase';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -92,7 +93,7 @@ onMounted(() => {
 
 const handleSignOut = async () => {
     try {
-        await authStore.signOut();
+        await authStore.logout();
         router.push('/auth');
     } catch (error) {
         console.error('Failed to sign out:', error);

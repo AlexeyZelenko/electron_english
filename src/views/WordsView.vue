@@ -116,7 +116,8 @@
 
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import {useWordStore} from '../stores/wordStore';
+import {useWordStore} from '../stores/wordStoreFirebase';
+// import {useWordStore} from '../stores/wordStore';
 import WordInputModal from '../components/WordInputModal.vue';
 
 const wordStore = useWordStore();
@@ -202,8 +203,7 @@ const playAudio = (word) => {
         // Ensure we are playing audio correctly in the renderer process
         const utterance = new SpeechSynthesisUtterance(word);
         utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
-        console.log('Playing audio for:', word);
+        window.speechSynthesis.speak(utterance);        
     } catch (error) {
         console.error('Error while trying to play audio:', error);
     }

@@ -92,8 +92,10 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useWordStore} from '../stores/wordStore';
+// import {useWordStore} from '../stores/wordStore';
+import {useWordStore} from '../stores/wordStoreFirebase';
 import type {Word} from '../types';
+import { log } from 'console';
 
 const emit = defineEmits(['close', 'word-added']);
 const wordStore = useWordStore();
@@ -113,7 +115,7 @@ const addWord = async () => {
     isLoading.value = true;
     error.value = '';
 
-    try {
+    try {        
         await wordStore.addWord(newWord.value);
         emit('word-added');
     } catch (err) {

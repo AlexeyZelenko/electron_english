@@ -164,7 +164,8 @@
 import {onMounted, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {useToast} from 'vue-toastification';
-import {useWordStore} from '../stores/wordStore';
+// import {useWordStore} from '../stores/wordStore';
+import {useWordStore} from '../stores/wordStoreFirebase';
 import {generateSentence, getWordDetails} from '../services/ai';
 import type {Word, WordDetails} from '../types';
 

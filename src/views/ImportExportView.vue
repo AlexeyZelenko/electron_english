@@ -146,9 +146,11 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import {useToast} from 'vue-toastification';
-import {useWordStore} from '../stores/wordStore';
+// import {useWordStore} from '../stores/wordStore';
+import {useWordStore} from '../stores/wordStoreFirebase';
 import {utils as xlsxUtils} from 'xlsx'; // Корректный импорт для работы с Excel файлами
-import type {Word} from '../types';
+// import type {Word} from '../types';
+import type {Word} from '../types/firebase';
 
 const wordStore = useWordStore();
 const fileInput = ref<HTMLInputElement | null>(null);
